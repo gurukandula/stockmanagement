@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div style={styles.container}>
-      <h1>Stock Items</h1>
+      <h1>Stock Items </h1>
       <table style={styles.table}>
         <thead>
           <tr>
