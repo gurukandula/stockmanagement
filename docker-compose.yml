@@ -8,7 +8,11 @@ services:
       - "8000:8000"
     env_file:
       - .env  # Reference the .env file for environment variables
-      
+    volumes:
+      - ./backend:/app  # Ensure backend is correctly mapped
+    working_dir: /app  # Set the working directory to /app
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+
   frontend:
     build: ./frontend
     container_name: frontend
