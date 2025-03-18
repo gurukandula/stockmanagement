@@ -1,11 +1,22 @@
-FROM python:3.9-slim
+# Use official Python image as base
+FROM python:3.12-slim
 
+# Set the working directory inside the container
 WORKDIR /app
 
-COPY requirements.txt .
-
+# Install dependencies
+COPY requirements.txt /app/
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY . .
+# Copy project files into the container
+COPY . /app/
 
-CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "backend.wsgi:application"]
+# Expose the port Gunicorn will use
+EXPOSE 8000
+
+# Set the environment variable for Django settings
+ENV DJANGO_SETTINGS_MODULE=backend.settings
+
+# Run the application with Gunicorn
+CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
